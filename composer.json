@@ -1,5 +1,5 @@
 {
-    "name": "7amoood/ubl-invoice",
+    "name": "marwan2/ubl-invoice",
     "description": "A modern object-oriented PHP library to create valid UBL files",
     "keywords": [
         "ubl",
@@ -16,18 +16,18 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Mohamed Abd-Elfattah",
-            "email": "hamoharakat@gmail.com",
+            "name": "Marwan Nabil",
+            "email": "marwan12c@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.3 || ^8.0",
-        "sabre/xml": "^4.0"
+        "php": "^7.1||^8.0",
+        "sabre/xml": "^2.2.5"
     },
     "require-dev": {
-        "phpunit/phpunit" : "^9.0",
-        "squizlabs/php_codesniffer": "^3.7"
+        "phpunit/phpunit" : "^7.0",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "psr-4": {

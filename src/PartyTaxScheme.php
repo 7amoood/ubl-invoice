@@ -87,7 +87,7 @@ class PartyTaxScheme implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
         if ($this->registrationName !== null) {
             $writer->write([

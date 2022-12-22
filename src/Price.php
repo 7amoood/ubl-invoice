@@ -10,8 +10,6 @@ class Price implements XmlSerializable
     private $priceAmount;
     private $baseQuantity;
     private $unitCode = UnitCode::UNIT;
-    private $unitCodeListId;
-    private $allowanceCharge;
 
     /**
      * @return float
@@ -68,59 +66,14 @@ class Price implements XmlSerializable
         return $this;
     }
 
-
-    /**
-     * @return string
-     */
-    public function getUnitCodeListId(): ?string
-    {
-        return $this->unitCodeListId;
-    }
-
-    /**
-     * @param string $unitCodeListId
-     * @return Price
-     */
-    public function setUnitCodeListId(?string $unitCodeListId): Price
-    {
-        $this->unitCodeListId = $unitCodeListId;
-        return $this;
-    }
-
-    /**
-     * @return AllowanceCharge
-     */
-    public function getAllowanceCharge(): ?AllowanceCharge
-    {
-        return $this->allowanceCharge;
-    }
-
-    /**
-     * @param AllowanceCharge $allowanceCharge
-     * @return Price
-     */
-    public function setAllowanceCharge(?AllowanceCharge $allowanceCharge): Price
-    {
-        $this->allowanceCharge = $allowanceCharge;
-        return $this;
-    }
-
     /**
      * The xmlSerialize method is called during xml writing.
      *
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
-        $baseQuantityAttributes = [
-            'unitCode' => $this->unitCode,
-        ];
-
-        if (!empty($this->getUnitCodeListId())) {
-            $baseQuantityAttributes['unitCodeListID'] = $this->getUnitCodeListId();
-        }
-
         $writer->write([
             [
                 'name' => Schema::CBC . 'PriceAmount',
@@ -132,14 +85,10 @@ class Price implements XmlSerializable
             [
                 'name' => Schema::CBC . 'BaseQuantity',
                 'value' => number_format($this->baseQuantity, 2, '.', ''),
-                'attributes' => $baseQuantityAttributes
+                'attributes' => [
+                    'unitCode' => $this->unitCode
+                ]
             ]
         ]);
-
-        if ($this->allowanceCharge !== null) {
-            $writer->write([
-                Schema::CAC . 'AllowanceCharge' => $this->allowanceCharge,
-            ]);
-        }
     }
 }

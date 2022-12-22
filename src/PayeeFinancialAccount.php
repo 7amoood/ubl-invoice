@@ -66,7 +66,7 @@ class PayeeFinancialAccount implements XmlSerializable
         return $this;
     }
 
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
         $writer->write([
             'name' => Schema::CBC . 'ID',

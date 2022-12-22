@@ -27,7 +27,7 @@ class FinancialInstitutionBranch implements XmlSerializable
         return $this;
     }
 
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
         $writer->write([
             Schema::CBC . 'ID' => $this->id

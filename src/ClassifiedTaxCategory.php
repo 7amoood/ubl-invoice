@@ -165,7 +165,7 @@ class ClassifiedTaxCategory implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
         $this->validate();
 
@@ -178,9 +178,13 @@ class ClassifiedTaxCategory implements XmlSerializable
         }
 
         $writer->write([
-            'name' => Schema::CBC . 'ID',
-            'value' => $this->getId(),
-            'attributes' => $schemeAttributes
+            [
+                'name' => Schema::CBC . 'ID',
+                'value' => $this->getId(),
+                'attributes' => $schemeAttributes
+
+            ],
+            Schema::CBC . 'Percent' => number_format($this->percent, 2, '.', ''),
         ]);
 
         if ($this->name !== null) {
@@ -188,10 +192,6 @@ class ClassifiedTaxCategory implements XmlSerializable
                 Schema::CBC . 'Name' => $this->name,
             ]);
         }
-
-        $writer->write([
-            Schema::CBC . 'Percent' => number_format($this->percent, 2, '.', ''),
-        ]);
 
         if ($this->taxExemptionReasonCode !== null) {
             $writer->write([

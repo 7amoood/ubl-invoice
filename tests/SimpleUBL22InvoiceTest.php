@@ -16,8 +16,7 @@ class SimpleUBL22InvoiceTest extends TestCase
     {
         // Address country
         $country = (new \NumNum\UBL\Country())
-            ->setIdentificationCode('BE')
-            ->setListId('ISO3166-1:Alpha2');
+            ->setIdentificationCode('BE');
 
         // Full address
         $address = (new \NumNum\UBL\Address())
@@ -55,7 +54,6 @@ class SimpleUBL22InvoiceTest extends TestCase
         $price = (new \NumNum\UBL\Price())
             ->setBaseQuantity(1)
             ->setUnitCode(\NumNum\UBL\UnitCode::UNIT)
-            ->setUnitCodeListId('UNECERec20')
             ->setPriceAmount(10);
 
         // Invoice Line tax totals
@@ -66,8 +64,6 @@ class SimpleUBL22InvoiceTest extends TestCase
         $invoiceLine = (new \NumNum\UBL\InvoiceLine())
             ->setId(0)
             ->setItem($productItem)
-            ->setUnitCode('C62')
-            ->setUnitCodeListID('UNECERec20')
             ->setPrice($price)
             ->setTaxTotal($lineTaxTotal)
             ->setInvoicedQuantity(1);

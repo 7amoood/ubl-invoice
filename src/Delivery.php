@@ -72,7 +72,7 @@ class Delivery implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
         if ($this->actualDeliveryDate != null) {
             $writer->write([

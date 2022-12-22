@@ -166,7 +166,7 @@ class AllowanceCharge implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
         $writer->write([
             Schema::CBC . 'ChargeIndicator' => $this->chargeIndicator ? 'true' : 'false',

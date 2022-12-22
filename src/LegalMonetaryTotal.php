@@ -7,11 +7,11 @@ use Sabre\Xml\XmlSerializable;
 
 class LegalMonetaryTotal implements XmlSerializable
 {
-    private $lineExtensionAmount = 0;
-    private $taxExclusiveAmount = 0;
-    private $taxInclusiveAmount = 0;
+    private $lineExtensionAmount;
+    private $taxExclusiveAmount;
+    private $taxInclusiveAmount;
     private $allowanceTotalAmount = 0;
-    private $payableAmount = 0;
+    private $payableAmount;
 
     /**
      * @return float
@@ -109,7 +109,7 @@ class LegalMonetaryTotal implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
         $writer->write([
             [

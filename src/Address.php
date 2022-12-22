@@ -12,8 +12,10 @@ class Address implements XmlSerializable
     private $buildingNumber;
     private $cityName;
     private $postalZone;
-    private $countrySubentity;
     private $country;
+    private $plotIdentification;
+    private $district;
+    private $countrySubentity;
 
     /**
      * @return string
@@ -107,24 +109,6 @@ class Address implements XmlSerializable
     }
 
     /**
-     * @return string
-     */
-    public function getCountrySubentity(): ?string
-    {
-        return $this->countrySubentity;
-    }
-
-    /**
-     * @param string $subentity
-     * @return Address
-     */
-    public function setCountrySubentity(string $countrySubentity): Address
-    {
-        $this->countrySubentity = $countrySubentity;
-        return $this;
-    }
-    
-    /**
      * @return Country
      */
     public function getCountry(): ?Country
@@ -143,12 +127,58 @@ class Address implements XmlSerializable
     }
 
     /**
+     * @return plotIdentification
+     */
+    public function getPlotIdentification(): ?string
+    {
+        return $this->plotIdentification;
+    }
+
+    /**
+     * @param plotIdentification $plotIdentification
+     * @return Address
+     */
+    public function setPlotIdentification(String $plotIdentification): Address
+    {
+        $this->plotIdentification = $plotIdentification;
+        return $this;
+    }
+
+    /**
+     * @return district
+     */
+    public function getDistrict(): ?string
+    {
+        return $this->district;
+    }
+
+    /**
+     * @param district $district
+     * @return Address
+     */
+    public function setDistrict(String $district): Address
+    {
+        $this->district = $district;
+        return $this;
+    }
+
+    /**
+     * @param countrySubentity $subentity
+     * @return Address
+     */
+    public function setCountrySubentity(String $subentity): Address
+    {
+        $this->countrySubentity = $subentity;
+        return $this;
+    }
+
+    /**
      * The xmlSerialize method is called during xml writing.
      *
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
         if ($this->streetName !== null) {
             $writer->write([
@@ -163,6 +193,16 @@ class Address implements XmlSerializable
         if ($this->buildingNumber !== null) {
             $writer->write([
                 Schema::CBC . 'BuildingNumber' => $this->buildingNumber
+            ]);
+        }
+        if ($this->plotIdentification !== null) {
+            $writer->write([
+                Schema::CBC . 'PlotIdentification' => $this->plotIdentification,
+            ]);
+        }
+        if ($this->district !== null) {
+            $writer->write([
+                Schema::CBC . 'CitySubdivisionName' => $this->district,
             ]);
         }
         if ($this->cityName !== null) {

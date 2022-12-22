@@ -12,6 +12,7 @@ class Attachment implements XmlSerializable
 {
     private $filePath;
     private $externalReference;
+    private $inlineContent;
 
     /**
      * @throws Exception exception when the mime type cannot be determined
@@ -47,6 +48,24 @@ class Attachment implements XmlSerializable
     /**
      * @return string
      */
+    public function getInlineContent(): ?string
+    {
+        return $this->inlineContent;
+    }
+
+    /**
+     * @param string $inlineContent
+     * @return Attachment
+     */
+    public function setInlineContent(string $inlineContent): Attachment
+    {
+        $this->inlineContent = $inlineContent;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getExternalReference(): ?string
     {
         return $this->externalReference;
@@ -70,12 +89,14 @@ class Attachment implements XmlSerializable
      */
     public function validate()
     {
-        if ($this->filePath === null && $this->externalReference === null) {
-            throw new InvalidArgumentException('Attachment must have a filePath or an ExternalReference');
-        }
+        if(!$this->inlineContent) {
+            if ($this->filePath === null) {
+                throw new InvalidArgumentException('Missing filePath');
+            }
 
-        if ($this->filePath !== null && !file_exists($this->filePath)) {
-            throw new InvalidArgumentException('Attachment at filePath does not exist');
+            if (file_exists($this->filePath) === false) {
+                throw new InvalidArgumentException('Attachment at filePath does not exist');
+            }
         }
     }
 
@@ -85,29 +106,35 @@ class Attachment implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer): void
+    public function xmlSerialize(Writer $writer)
     {
         $this->validate();
 
-        if ($this->filePath) {
+        $fileName = '';
+        $mimeType = '';
+        $fileContents = '';
+
+        if($this->filePath) {
             $fileContents = base64_encode(file_get_contents($this->filePath));
             $mimeType = $this->getFileMimeType();
+            $fileName = basename($this->filePath);
 
-            $writer->write([
-                'name' => Schema::CBC . 'EmbeddedDocumentBinaryObject',
-                'value' => $fileContents,
-                'attributes' => [
-                    'mimeCode' => $mimeType,
-                    'filename' => basename($this->filePath)
-                ]
-            ]);
+        } else if($this->inlineContent) {
+            $fileContents = $this->inlineContent;
+            $mimeType = 'text/plain';
         }
 
-        if ($this->externalReference) {
-            $writer->writeElement(
-                Schema::CAC . 'ExternalReference',
-                [ Schema::CBC . 'URI' => $this->externalReference ]
-            );
+        $writer->write([
+            'name' => Schema::CBC . 'EmbeddedDocumentBinaryObject',
+            'value' => $fileContents,
+            'attributes' => [
+                'mimeCode' => $mimeType,
+                'filename' => $fileName
+            ]
+        ]);
+
+        if($this->externalReference !== null) {
+            $writer->write(['externalReference'=> $this->externalReference]);
         }
     }
 }

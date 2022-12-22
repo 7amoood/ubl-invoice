@@ -11,6 +11,7 @@ class TaxTotal implements XmlSerializable
 {
     private $taxAmount;
     private $taxSubTotals = [];
+    private $roundingAmount;
 
     /**
      * @return mixed
@@ -49,6 +50,24 @@ class TaxTotal implements XmlSerializable
     }
 
     /**
+     * @return mixed
+     */
+    public function getRoundingAmount(): float
+    {
+        return $this->roundingAmount;
+    }
+
+    /**
+     * @param mixed $roundingAmount
+     * @return TaxTotal
+     */
+    public function setRoundingAmount(?float $amount): TaxTotal
+    {
+        $this->roundingAmount = $amount;
+        return $this;
+    }
+
+    /**
      * The validate function that is called during xml writing to valid the data of the object.
      *
      * @throws InvalidArgumentException An error with information about required data that is missing to write the XML
@@ -79,6 +98,18 @@ class TaxTotal implements XmlSerializable
                 ]
             ],
         ]);
+
+        if($this->roundingAmount) {
+            $writer->write([
+                [
+                    'name' => Schema::CBC . 'RoundingAmount',
+                    'value' => number_format($this->roundingAmount, 2, '.', ''),
+                    'attributes' => [
+                        'currencyID' => Generator::$currencyID
+                    ]
+                ],
+            ]);
+        }
 
         foreach ($this->taxSubTotals as $taxSubTotal) {
             $writer->write([Schema::CAC . 'TaxSubtotal' => $taxSubTotal]);
