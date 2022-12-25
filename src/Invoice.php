@@ -33,7 +33,7 @@ class Invoice implements XmlSerializable
     private $allowanceCharges;
     private $additionalDocumentReference;
     private $additionalDocumentReferences;
-    private $documentCurrencyCode = 'EUR';
+    private $documentCurrencyCode = 'SAR';
     private $buyerReference;
     private $accountingCostCode;
     private $invoicePeriod;
@@ -170,7 +170,7 @@ class Invoice implements XmlSerializable
      * @param mixed $currencyCode
      * @return Invoice
      */
-    public function setDocumentCurrencyCode(string $currencyCode = 'EUR'): Invoice
+    public function setDocumentCurrencyCode(string $currencyCode = 'SAR'): Invoice
     {
         $this->documentCurrencyCode = $currencyCode;
         return $this;
@@ -450,7 +450,7 @@ class Invoice implements XmlSerializable
         return $this;
     }
 
-      /**
+    /**
      * @return string buyerReference
      */
     public function getBuyerReference(): ?string
@@ -630,9 +630,9 @@ class Invoice implements XmlSerializable
             throw new InvalidArgumentException('Missing invoice accountingSupplierParty');
         }
 
-        if ($this->accountingCustomerParty === null) {
-            throw new InvalidArgumentException('Missing invoice accountingCustomerParty');
-        }
+        // if ($this->accountingCustomerParty === null) {
+        //     throw new InvalidArgumentException('Missing invoice accountingCustomerParty');
+        // }
 
         if ($this->invoiceLines === null) {
             throw new InvalidArgumentException('Missing invoice lines');
@@ -648,7 +648,7 @@ class Invoice implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer)
+    public function xmlSerialize(Writer $writer): void
     {
         $this->validate();
 
@@ -722,23 +722,25 @@ class Invoice implements XmlSerializable
             ]);
         }
 
-        if($this->billingReference !== null) {
+        if ($this->billingReference !== null) {
             $writer->write([
-                Schema::CAC . 'BillingReference' => $this->billingReference]);
+                Schema::CAC . 'BillingReference' => $this->billingReference
+            ]);
         }
 
-        if($this->additionalDocumentReferences !== null) {
+        if ($this->additionalDocumentReferences !== null) {
             foreach ($this->additionalDocumentReferences as $docReference) {
                 $writer->write([
-                    Schema::CAC . 'AdditionalDocumentReference' => $docReference]);
+                    Schema::CAC . 'AdditionalDocumentReference' => $docReference
+                ]);
             }
         }
 
-        if($this->signature !== null) {
+        if ($this->signature !== null) {
             $writer->write([
                 Schema::CAC . 'Signature' => $this->signature
             ]);
-        } 
+        }
 
         if ($this->taxPointDate !== null) {
             $writer->write([
@@ -830,10 +832,11 @@ class Invoice implements XmlSerializable
             ]);
         }
 
-        if($this->taxTotals !== null) {
+        if ($this->taxTotals !== null) {
             foreach ($this->taxTotals as $txTotal) {
                 $writer->write([
-                    Schema::CAC . 'TaxTotal' => $txTotal]);
+                    Schema::CAC . 'TaxTotal' => $txTotal
+                ]);
             }
         }
 
@@ -846,6 +849,5 @@ class Invoice implements XmlSerializable
                 Schema::CAC . 'InvoiceLine' => $invoiceLine
             ]);
         }
-        
     }
 }

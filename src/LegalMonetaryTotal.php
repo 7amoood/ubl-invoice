@@ -12,6 +12,19 @@ class LegalMonetaryTotal implements XmlSerializable
     private $taxInclusiveAmount;
     private $allowanceTotalAmount = 0;
     private $payableAmount;
+    private $prepaidAmount = 0;
+
+
+    public function getPrepaidAmount()
+    {
+        return $this->prepaidAmount;
+    }
+
+    public function setPrepaidAmount($prepaidAmount)
+    {
+        $this->prepaidAmount = $prepaidAmount;
+        return $this;
+    }
 
     /**
      * @return float
@@ -109,7 +122,7 @@ class LegalMonetaryTotal implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer)
+    public function xmlSerialize(Writer $writer): void
     {
         $writer->write([
             [
@@ -147,6 +160,13 @@ class LegalMonetaryTotal implements XmlSerializable
             [
                 'name' => Schema::CBC . 'PayableAmount',
                 'value' => number_format($this->payableAmount, 2, '.', ''),
+                'attributes' => [
+                    'currencyID' => Generator::$currencyID
+                ]
+            ],
+            [
+                'name' => Schema::CBC . 'PrepaidAmount',
+                'value' => number_format($this->prepaidAmount, 2, '.', ''),
                 'attributes' => [
                     'currencyID' => Generator::$currencyID
                 ]

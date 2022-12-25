@@ -34,11 +34,11 @@ class BillingReference implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer)
+    public function xmlSerialize(Writer $writer): void
     {
         if ($this->invoiceDocumentReferenceID != null) {
             $writer->write([
-                Schema::CAC . 'InvoiceDocumentReference' => [ 
+                Schema::CAC . 'InvoiceDocumentReference' => [
                     Schema::CBC . 'ID' => $this->invoiceDocumentReferenceID
                 ]
             ]);

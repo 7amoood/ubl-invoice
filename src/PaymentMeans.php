@@ -12,7 +12,8 @@ class PaymentMeans implements XmlSerializable
     private $paymentMeansCodeAttributes = [
         'listID' => 'UN/ECE 4461',
         'listName' => 'Payment Means',
-        'listURI' => 'http://docs.oasis-open.org/ubl/os-UBL-2.0-update/cl/gc/default/PaymentMeansCode-2.0.gc'];
+        'listURI' => 'http://docs.oasis-open.org/ubl/os-UBL-2.0-update/cl/gc/default/PaymentMeansCode-2.0.gc'
+    ];
     private $paymentDueDate;
     private $instructionId;
     private $instructionNote;
@@ -130,7 +131,7 @@ class PaymentMeans implements XmlSerializable
         return $this;
     }
 
-    public function xmlSerialize(Writer $writer)
+    public function xmlSerialize(Writer $writer): void
     {
         $writer->write([
             'name' => Schema::CBC . 'PaymentMeansCode',

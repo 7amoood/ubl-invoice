@@ -9,7 +9,19 @@ class Price implements XmlSerializable
 {
     private $priceAmount;
     private $baseQuantity;
-    private $unitCode = UnitCode::UNIT;
+    private $unitCode = UnitCode::PIECE;
+    private $allowanceCharges = null;
+
+    public function getAllowanceCharges()
+    {
+        return $this->allowanceCharges;
+    }
+
+    public function setAllowanceCharges($allowanceCharges)
+    {
+        $this->allowanceCharges = $allowanceCharges;
+        return $this;
+    }
 
     /**
      * @return float
@@ -72,7 +84,7 @@ class Price implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer)
+    public function xmlSerialize(Writer $writer): void
     {
         $writer->write([
             [
@@ -90,5 +102,13 @@ class Price implements XmlSerializable
                 ]
             ]
         ]);
+
+        if ($this->allowanceCharges !== null) {
+            foreach ($this->allowanceCharges as $allowanceCharge) {
+                $writer->write([
+                    Schema::CAC . 'AllowanceCharge' => $allowanceCharge
+                ]);
+            }
+        }
     }
 }

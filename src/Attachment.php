@@ -24,7 +24,7 @@ class Attachment implements XmlSerializable
             return $mime_type;
         }
 
-        throw new Exception('Could not determine mime_type of '.$this->filePath);
+        throw new Exception('Could not determine mime_type of ' . $this->filePath);
     }
 
     /**
@@ -89,7 +89,7 @@ class Attachment implements XmlSerializable
      */
     public function validate()
     {
-        if(!$this->inlineContent) {
+        if (!$this->inlineContent) {
             if ($this->filePath === null) {
                 throw new InvalidArgumentException('Missing filePath');
             }
@@ -106,7 +106,7 @@ class Attachment implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer)
+    public function xmlSerialize(Writer $writer): void
     {
         $this->validate();
 
@@ -114,12 +114,11 @@ class Attachment implements XmlSerializable
         $mimeType = '';
         $fileContents = '';
 
-        if($this->filePath) {
+        if ($this->filePath) {
             $fileContents = base64_encode(file_get_contents($this->filePath));
             $mimeType = $this->getFileMimeType();
             $fileName = basename($this->filePath);
-
-        } else if($this->inlineContent) {
+        } else if ($this->inlineContent) {
             $fileContents = $this->inlineContent;
             $mimeType = 'text/plain';
         }
@@ -133,8 +132,8 @@ class Attachment implements XmlSerializable
             ]
         ]);
 
-        if($this->externalReference !== null) {
-            $writer->write(['externalReference'=> $this->externalReference]);
+        if ($this->externalReference !== null) {
+            $writer->write(['externalReference' => $this->externalReference]);
         }
     }
 }

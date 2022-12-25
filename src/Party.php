@@ -149,7 +149,7 @@ class Party implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer)
+    public function xmlSerialize(Writer $writer): void
     {
         if ($this->partyIdentification !== null) {
             $writer->write([
@@ -166,7 +166,7 @@ class Party implements XmlSerializable
 
         if ($this->physicalLocation !== null) {
             $writer->write([
-               Schema::CAC . 'PhysicalLocation' => [Schema::CAC . 'Address' => $this->physicalLocation]
+                Schema::CAC . 'PhysicalLocation' => [Schema::CAC . 'Address' => $this->physicalLocation]
             ]);
         }
 

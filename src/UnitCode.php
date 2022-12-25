@@ -9,7 +9,7 @@ namespace NumNum\UBL;
 class UnitCode
 {
     const UNIT = 'C62';
-    const PIECE = 'H87';
+    const PIECE = 'PCE';
 
     const ARE = 'ARE';
     const HECTARE = 'HAR';

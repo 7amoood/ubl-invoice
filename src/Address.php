@@ -129,7 +129,7 @@ class Address implements XmlSerializable
     /**
      * @return plotIdentification
      */
-    public function getPlotIdentification(): ?string
+    public function getPlotIdentification()
     {
         return $this->plotIdentification;
     }
@@ -147,7 +147,7 @@ class Address implements XmlSerializable
     /**
      * @return district
      */
-    public function getDistrict(): ?string
+    public function getDistrict()
     {
         return $this->district;
     }
@@ -178,7 +178,7 @@ class Address implements XmlSerializable
      * @param Writer $writer
      * @return void
      */
-    public function xmlSerialize(Writer $writer)
+    public function xmlSerialize(Writer $writer): void
     {
         if ($this->streetName !== null) {
             $writer->write([

@@ -84,14 +84,14 @@ class PaymentTerms implements XmlSerializable
         return $this;
     }
 
-    public function xmlSerialize(Writer $writer)
+    public function xmlSerialize(Writer $writer): void
     {
         if ($this->note !== null) {
-            $writer->write([ Schema::CBC . 'Note' => $this->note ]);
+            $writer->write([Schema::CBC . 'Note' => $this->note]);
         }
 
         if ($this->settlementDiscountPercent !== null) {
-            $writer->write([ Schema::CBC . 'SettlementDiscountPercent' => $this->settlementDiscountPercent ]);
+            $writer->write([Schema::CBC . 'SettlementDiscountPercent' => $this->settlementDiscountPercent]);
         }
 
         if ($this->amount !== null) {
@@ -107,7 +107,7 @@ class PaymentTerms implements XmlSerializable
         }
 
         if ($this->settlementPeriod !== null) {
-            $writer->write([ Schema::CAC . 'SettlementPeriod' => $this->settlementPeriod ]);
+            $writer->write([Schema::CAC . 'SettlementPeriod' => $this->settlementPeriod]);
         }
     }
 }
