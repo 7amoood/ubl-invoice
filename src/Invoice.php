@@ -797,7 +797,7 @@ class Invoice implements XmlSerializable
 
         $writer->write([
             Schema::CAC . 'AccountingSupplierParty' => [Schema::CAC . "Party" => $this->accountingSupplierParty],
-            Schema::CAC . 'AccountingCustomerParty' => $customerParty,
+            Schema::CAC . 'AccountingCustomerParty' => '',
         ]);
 
         if ($this->delivery != null) {

@@ -128,7 +128,7 @@ class Attachment implements XmlSerializable
             'value' => $fileContents,
             'attributes' => [
                 'mimeCode' => $mimeType,
-                'filename' => $fileName
+                // 'filename' => $fileName
             ]
         ]);
 

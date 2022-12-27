@@ -158,15 +158,15 @@ class LegalMonetaryTotal implements XmlSerializable
 
             ],
             [
-                'name' => Schema::CBC . 'PayableAmount',
-                'value' => number_format($this->payableAmount, 2, '.', ''),
+                'name' => Schema::CBC . 'PrepaidAmount',
+                'value' => number_format($this->prepaidAmount, 2, '.', ''),
                 'attributes' => [
                     'currencyID' => Generator::$currencyID
                 ]
             ],
             [
-                'name' => Schema::CBC . 'PrepaidAmount',
-                'value' => number_format($this->prepaidAmount, 2, '.', ''),
+                'name' => Schema::CBC . 'PayableAmount',
+                'value' => number_format($this->payableAmount, 2, '.', ''),
                 'attributes' => [
                     'currencyID' => Generator::$currencyID
                 ]
